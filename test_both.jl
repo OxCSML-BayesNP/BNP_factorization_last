@@ -1,3 +1,10 @@
+#-------------------------------------------------------------------------------
+# Test the code on simulated data
+#   Set the parameters of the model to sample from in the 'Set Parameters'
+#   section. Then the script will run consecutively the Gibbs sampler on a
+#   weighted and unweigted version of the simulated data
+#-------------------------------------------------------------------------------
+
 include("src/main.jl")
 
 using PyPlot
@@ -5,40 +12,35 @@ using ProfileView
 using ProgressMeter
 using HDF5, JLD
 
-# Parameters
+#-------------------------------------------------------------------------------
+# Set parameters
+#-------------------------------------------------------------------------------
+
+
+# Parameters to simulate from
 n=400;kappa=1.5;tau=.6;sigma=0.17;alpha=.015;beta=.05
 #beta = 1.*alpha
 
-weighted = true
-self_edge= true
-directed = true
+# Proportion of entries to mask in case the user wants to
+# assess prediction performance
+pred_ratio = 0.
 
-data_name = string("Synthetic/ n=",n,
-                  " kappa = ", kappa,
-                  " tau = ",tau,
-                  " sigma = ",sigma,
-                  " alpha = ", alpha,
-                  " beta = ",beta,
-                  " weighted = ", weighted)
-
-
-
-
+# Parameters of the Gibbs sampler
 warm_start = true
-
-pred_ratio = 0.#20
 
 # Plot true values
 plot_true = true
 
-
-
-# Gibbs sampler
-
 # Number of iterations
-n_iter = (warm_start ? 1000 : 150000)
+n_iter = (warm_start ? 1000 : 10000)
 # Number of communities to store
 K = 10
+
+# Number of updates of the hyperparameters per iteration
+n_steps_hyper = 10
+
+# Thinning the chain, store only every skip iteration
+skip = 50
 
 # Hyperparameters for the MH updates
 prior_params = Dict()
@@ -62,15 +64,23 @@ FIXED_TAU = false
 FIXED_ALPHA = false
 FIXED_BETA = true
 
+#-------------------------------------------------------------------------------
+# Sample from model
+#-------------------------------------------------------------------------------
 
-c_kappa = (FIXED_KAPPA ? kappa : 2.)
-c_sigma = (FIXED_SIGMA ? sigma : 0.)
-c_tau = (FIXED_TAU ? tau : .8)
-c_alpha = alpha
-c_beta = beta
+weighted = true
+self_edge= true
+directed = true
 
-# Number of updates of the hyperparameters per iteration
-n_steps_hyper = 10
+data_name = string("Synthetic/ n=",n,
+                  " kappa = ", kappa,
+                  " tau = ",tau,
+                  " sigma = ",sigma,
+                  " alpha = ", alpha,
+                  " beta = ",beta,
+                  " weighted = ", weighted)
+
+
 
 println("Parameters set to")
 println(string("  n = ", n))
@@ -89,7 +99,9 @@ println("Generating model")
 println()
 
 
-
+#-------------------------------------------------------------------------------
+# Time each part of the Gibbs sampler
+#-------------------------------------------------------------------------------
 
 # Inference on the community with higher activity
 println("Inference on the community with higher activity")
@@ -152,6 +164,7 @@ println(sort(R,rev=true))
 Z_tilde = copy(Z_)
 
 
+
 # Select entries to predict
 println("Masking entries to predict")
 n_to_predict = Int(pred_ratio*n^2)
@@ -182,9 +195,15 @@ all_ind_mat = sparse(I_all,J_all,V_all,n,n)
 println()
 
 
+#-------------------------------------------------------------------------------
+# Gibbs sampler with weighted observation
+#-------------------------------------------------------------------------------
 
-
-# Gibbs sampler Weigted
+c_kappa = (FIXED_KAPPA ? kappa : 2.)
+c_sigma = (FIXED_SIGMA ? sigma : 0.)
+c_tau = (FIXED_TAU ? tau : .8)
+c_alpha = alpha
+c_beta = beta
 
 println()
 
@@ -268,7 +287,7 @@ end
                                                                 sentAndReceived_,
                                                                 s_min)
   end
-  for bob in 1:49
+  for bob in 1:skip-1
     # Update measure
     R_,V_,n_observed,slice_matrix,s_min = update_measure(partition_,sentAndReceived_,all_ind_mat,c_kappa,c_tau,c_sigma,c_alpha,c_beta)
 
@@ -347,9 +366,16 @@ cd(main_dir)
 
 
 
-#############################################
-# Gibs sample unweighted
-#############################################
+#-------------------------------------------------------------------------------
+# Gibbs sampler with weighted observation
+#-------------------------------------------------------------------------------
+
+c_kappa = (FIXED_KAPPA ? kappa : 2.)
+c_sigma = (FIXED_SIGMA ? sigma : 0.)
+c_tau = (FIXED_TAU ? tau : .8)
+c_alpha = alpha
+c_beta = beta
+
 I_,J_,V_ = findnz(Z_)
 V_s = [(v_ > 0) ? 1 : 0 for v_ in V_]
 Z_tilde = sparse(I_,J_,V_s,n,n)
@@ -418,7 +444,7 @@ end
                                                               s_min)
   end
 
-  for bob in 1:49
+  for bob in 1:skip-1
     # Update measure
     R_,V_,n_observed,slice_matrix,s_min = update_measure(partition_,sentAndReceived_,all_ind_mat,c_kappa,c_tau,c_sigma,c_alpha,c_beta)
 

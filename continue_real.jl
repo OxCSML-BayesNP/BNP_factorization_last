@@ -1,3 +1,11 @@
+#-------------------------------------------------------------------------------
+# Carry on an interupted run
+#   In the 'Set Parameters' section, give the name of the dataset, its properties
+#   as well as the folder where the interupted run is stored (current_dir will
+#   be the time of the run, look in the result folder).
+#-------------------------------------------------------------------------------
+
+
 using HDF5, JLD
 include("src/main.jl")
 

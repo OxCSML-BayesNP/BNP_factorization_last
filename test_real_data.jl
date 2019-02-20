@@ -1,4 +1,15 @@
 
+#-------------------------------------------------------------------------------
+# Test the code on real data
+#     In the 'Data' section, chose the name of the dataset of interest in
+#   "data_name". The file must then be in data/$data_name.txt.
+#   The results will then be stored in results/$data_name/$results_path/time_of_run
+#     Set the parameters of the Gibbs sampler in the 'Set Parameters'
+#   section. 
+#-------------------------------------------------------------------------------
+
+
+
 include("src/main.jl")
 
 using ProgressMeter
@@ -14,7 +25,7 @@ using HDF5, JLD
 #data_name = "deezer_RO_und"
 data_name ="data_for_sigma_800"
 
-# Result forlder name
+# Result folder name
 result_folder = "sigma 025"
 # Comments about the run
 comments = "Alpha free\n new update of mu tilde \n new measure unobs \n sigma max 0.25"
@@ -47,7 +58,7 @@ monitoring_sigma = true
 
 # Number of iterations for the Gibbs sampler
 n_iter = 10000
-# Plot every skip iterations
+# Thinning the chain, store only every skip iteration
 skip = 50
 # Number of iterations as burn-in
 burn = floor(Int,2.*n_iter/4)

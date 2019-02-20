@@ -1,9 +1,18 @@
+#-------------------------------------------------------------------------------
+# Simulate a dataset from the model
+#   Set the parameters of the model to sample from in the 'Set Parameters'
+#   section. The simulated data will be stored in data/$data_name/
+#-------------------------------------------------------------------------------
+
+
 include("src/main.jl")
 
 using HDF5, JLD
 using LightGraphs
 
-# Parameters
+#-------------------------------------------------------------------------------
+# Set parameters
+#-------------------------------------------------------------------------------
 n=700;kappa=2.5;tau=.2;sigma=0.2;alpha=.1;beta=1.
 data_name = "data_for_sigma_700"
 
@@ -17,6 +26,9 @@ println(string("  beta = ", beta))
 println(string("  data name when saving = ", data_name))
 println()
 
+#-------------------------------------------------------------------------------
+# Sample from the model
+#-------------------------------------------------------------------------------
 # Sample a graph from the model
 println("Generating model")
 @time R, V, Z = generate_model_(n,kappa,tau,sigma,alpha,beta)

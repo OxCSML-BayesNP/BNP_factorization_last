@@ -1,13 +1,33 @@
+#-------------------------------------------------------------------------------
+# Plot and save the results of a saved run (finished or not)
+#   In the 'Set Parameters' section, give the name of the dataset, its properties
+#   as well as the folder where the interupted run is stored (current_dir will
+#   be the time of the run, look in the result folder).
+#-------------------------------------------------------------------------------
+
 using HDF5, JLD
 include("src/main.jl")
-data_name = "wikipedia_3000"
-warm_start = false
-PRINT_ = true
 
+
+
+#-------------------------------------------------------------------------------
+# Set parameters
+#-------------------------------------------------------------------------------
+# Data name, it has to be in the data/ folder as a .txt file
+data_name = "wikipedia_3000"
+
+# Main directory
 main_dir = pwd()
+# Directory from which we load the run
 current_dir = "sigma 1/01-02-19_16-24-51"
 load_dir = string("results/",data_name,"/",current_dir,"/variables/")
 
+
+#-------------------------------------------------------------------------------
+# Load dataset and variables of the interupted run
+#-------------------------------------------------------------------------------
+warm_start = false
+PRINT_ = false
 
 file_name = string("data/",data_name,".txt")
 println(string("Reading the file ",file_name))
@@ -15,10 +35,8 @@ println(string("Reading the file ",file_name))
 println()
 
 println("Creating sparse matrix")
-#i_data = [Int(x+1) for x in A[:,1]] #enron, email eu
-#j_data = [Int(x+1) for x in A[:,2]] #enron, email-eu
-i_data = [Int(x) for x in A[:,1]] #polnlogs, wikipedia_3000, Protein230, NIPS234, NIPS12
-j_data = [Int(x) for x in A[:,2]] #polnlogs, wikipedia_3000, Protein230, NIPS234, NIPS12
+i_data = [Int(x) for x in A[:,1]]
+j_data = [Int(x) for x in A[:,2]]
 val_data = ones(Int, length(i_data))
 n = max(maximum(i_data),maximum(j_data))
 sparse_data = sparse(i_data,j_data,val_data,n,n)
@@ -62,6 +80,10 @@ K = size(activities_list)[2]
 plot_true = false
 pred_ratio = 0.
 
+
+#-------------------------------------------------------------------------------
+# Save plots
+#-------------------------------------------------------------------------------
 results_path = string("results/",data_name,"/",current_dir,"/imgV/")
 mkpath(results_path)
 cd(results_path)
@@ -82,29 +104,4 @@ spy_sparse_order(sparse_data,order,1.)
 spy_sparse_den(sparse_data,clusters_o)
 PyPlot.close()
 ion()
-cd(main_dir)
-
-# Polblogs histogram
-cd(results_path)
-if data_name == "polblogs_undirected"
-  party_aff = zeros(length(clusters))
-  weights_v = zeros(length(clusters))
-  t = 1
-  for (k,c) in clusters
-    for c_i in c
-      if c_i > 759
-        party_aff[t] += 1.
-      end
-    end
-    party_aff[t] = party_aff[t]/length(c)
-    weights_v[t] = length(c)
-    t += 1
-  end
-
-  PyPlot.figure(figsize=(30.,24.))
-  PyPlot.plt[:hist](party_aff,30,weights = weights_v)
-  title("Clusters historgram")
-  legend()
-  PyPlot.savefig("Clusters historgram.png",bbox_inches="tight")
-end
 cd(main_dir)
