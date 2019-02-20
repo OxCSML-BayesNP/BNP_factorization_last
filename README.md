@@ -1,7 +1,7 @@
 # BNP-factorization
 
 
-Julia code for the Generalized Gamma Edge partition model
+Julia code for the Nonnegative Bayesian nonparametric factor models with completely random measures.
 
 
 ### Installing
