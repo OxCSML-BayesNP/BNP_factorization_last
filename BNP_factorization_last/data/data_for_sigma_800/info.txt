@@ -1,0 +1,21 @@
+Parameters set to
+  n = 800
+  kappa = 1.0
+  tau = 0.15
+  sigma = 0.2
+  alpha = 0.05
+  beta = 0.2
+  n_active = 42
+  data name when saving = data_for_sigma_800
+
+Generating model
+  1.125933 seconds (269.87 k allocations: 631.342 MiB, 5.32% gc time)
+  Number of edges: 20198
+  Maximal entry: 143
+
+Computing local clustering coefficients
+  0.004501 seconds (12 allocations: 20.266 KiB)
+  Variance: 0.009858900484871449
+  20% Quantile: 0.050407147241355796
+  80% Quantile: 0.15024955436720144
+

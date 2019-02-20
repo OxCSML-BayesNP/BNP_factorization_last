@@ -1,0 +1,130 @@
+
+include("main.jl")
+
+file_name = "Email-Enron.txt"
+#file_name = "polblogs.txt"
+
+A = readdlm(file_name)
+i_data = [Int(x+1) for x in A[:,1]] #enron
+j_data = [Int(x+1) for x in A[:,2]] #enron
+#i_data = [Int(x) for x in A[:,1]] #polnlogs
+#j_data = [Int(x) for x in A[:,2]] #polnlogs
+
+val_data = ones(Int, length(i_data))
+n = max(maximum(i_data),maximum(i_data))
+sparse_data = sparse(i_data,j_data,val_data,n,n)  #polblogs
+#sparse_data = sparse(i_data,j_data,val_data)
+
+# Parameters
+n=first(size(sparse_data))
+tau=.1;sigma=0.2;alpha=.1;beta=10.
+warm_start = false
+weighted = false
+
+n_iter = 10000
+K = 10
+
+
+prior_params = Dict()
+prior_params["kappa"] = (4.,1.)
+prior_params["sigma"] = (.2,1.)
+prior_params["tau"] = (.2,1.)
+prior_params["alpha"] = (.2,1.)
+prior_params["beta"] = (10.,2.)
+
+prop_params = Dict()
+prop_params["kappa"] = 0.04
+prop_params["sigma"] = 0.04
+prop_params["tau"] = 0.04
+prop_params["alpha"] = 0.02
+prop_params["beta"] = 0.02
+
+FIXED_KAPPA = false
+FIXED_SIGMA = false
+FIXED_TAU = false
+FIXED_ALPHA = false
+FIXED_BETA = true
+
+c_kappa = (FIXED_KAPPA ? kappa : 3.)
+c_sigma = (FIXED_SIGMA ? sigma : .2)
+c_tau = (FIXED_TAU ? tau : .2)
+c_alpha = alpha
+c_beta = beta
+
+# Number of updates of the hyperparameters per iteration
+n_steps_hyper = 10
+
+
+# List of the number of active communities
+n_active_list = zeros(Int,n_iter)
+# List of the top K activites
+activities_list = zeros(n_iter,K)
+
+kappa_list = zeros(n_iter)
+sigma_list = zeros(n_iter)
+tau_list = zeros(n_iter)
+alpha_list = zeros(n_iter)
+beta_list = zeros(n_iter)
+s_min_list = zeros(n_iter)
+
+
+
+s_min = 0.
+
+
+
+if warm_start == false
+  partition_ = Factorized{Bool}()
+  sentAndReceived_ = Count()
+  partition_[1] = sparse_data
+  sentAndReceived_[1] = reshape(sum(sparse_data,1),n) + reshape(sum(sparse_data,2),n)
+end
+
+
+  for i in 1:n_iter
+    # Update measure
+    R_,V_,n_observed,slice_matrix,s_min = update_measure(partition_,sentAndReceived_,sparse_data,kappa,tau,sigma,alpha,beta)
+    # Store values
+    n_active_list[i] = n_observed
+    sorted_R_ = sort(R_,rev=true)
+    for j in 1:min(n_observed,K)
+      activities_list[i,j] = sorted_R_[j]
+    end
+    # Update partition
+    partition_,sentAndReceived_ = update_partition_unweighted(R_,V_,slice_matrix,sparse_data)
+    print_each = Int(n_iter/20)
+    if i%print_each == 0
+      println(string("Progress: ", 100.*i/n_iter,"%"))
+    end
+
+    # Update hyperparameters
+    for t in 1:n_steps_hyper
+      p,prop_kappa,prop_sigma,prop_tau,prop_alpha,prop_beta = update_parameters_(c_kappa,
+                                                                                c_sigma,
+                                                                                c_tau,
+                                                                                c_alpha,
+                                                                                c_beta,
+                                                                                prior_params,
+                                                                                prop_params,
+                                                                                R_,
+                                                                                V_,
+                                                                                sentAndReceived_,
+                                                                                s_min)
+      p = min(p,1.)
+      b_dist = Bernoulli(p)
+      b_rand = rand(b_dist)
+      if b_rand == 1
+        c_kappa = prop_kappa
+        c_sigma = prop_sigma
+        c_tau = prop_tau
+        c_alpha = prop_alpha
+        c_beta = prop_beta
+      end
+    end
+    kappa_list[i] = c_kappa
+    sigma_list[i] = c_sigma
+    tau_list[i] = c_tau
+    alpha_list[i] = c_alpha
+    beta_list[i] = c_beta
+
+  end
