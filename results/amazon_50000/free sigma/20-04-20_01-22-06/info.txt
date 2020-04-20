@@ -1,0 +1,27 @@
+Dataset:
+  name = amazon_50000
+  number of nodes = 47350
+  number of edges = 46654
+  directed = false
+  weighted = false
+
+Initial parameters:
+  kappa = 1.0
+  tau = 5.0
+  sigma = 0.0
+  alpha = 0.5
+  beta = 0.5
+  warm_start = true
+
+Hyper parameters:
+  kappa = (0.1, 0.1)
+  tau = (0.1, 0.1)
+  sigma = (0.1, 0.1)
+  alpha = (0.1, 0.1)
+  beta = (1.0, 1.0)
+
+Number of iterations = 250000
+Comments : Alpha free
+ new update of mu tilde 
+ new measure unobs 
+ sigma max 0.25

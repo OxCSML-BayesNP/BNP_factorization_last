@@ -1,6 +1,7 @@
 using Pkg
 
 Pkg.add("PyCall")
+Pkg.add("ArgParse")
 Pkg.add("Distributions")
 Pkg.add("PyPlot")
 Pkg.add("ProfileView")

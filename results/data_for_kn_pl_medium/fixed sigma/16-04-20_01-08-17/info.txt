@@ -1,0 +1,27 @@
+Dataset:
+  name = data_for_kn_pl_medium
+  number of nodes = 1000
+  number of edges = 13457
+  directed = true
+  weighted = true
+
+Initial parameters:
+  kappa = 1.0
+  tau = 5.0
+  sigma = 0.0
+  alpha = 0.5
+  beta = 0.5
+  warm_start = true
+
+Hyper parameters:
+  kappa = (0.1, 0.1)
+  tau = (0.1, 0.1)
+  sigma = (0.1, 0.1)
+  alpha = (0.1, 0.1)
+  beta = (1.0, 1.0)
+
+Number of iterations = 100000
+Comments : Alpha free
+ new update of mu tilde 
+ new measure unobs 
+ sigma max 0.25

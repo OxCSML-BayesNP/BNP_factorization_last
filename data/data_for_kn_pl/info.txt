@@ -1,0 +1,13 @@
+Dataset:
+  name = data_for_kn_pl
+  number of nodes = 1500
+  number of edges = 26517
+  directed = true
+  weighted = true
+
+Initial parameters:
+  K = 20
+  r_0 = 1.5
+  v_alpha = 0.1
+  v_beta = 0.5
+  sigma = 0.2

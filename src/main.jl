@@ -491,8 +491,8 @@ function update_parameters_neg2(current_kappa::Float64,
   if FIXED_SIGMA
     prop_sigma = current_sigma
   else
-    transf_sigma = LogNormal(log(1-4*current_sigma),sigma_sigma) # Change scale sigma
-    prop_sigma = (1-rand(transf_sigma))/4. # Change scale sigma
+    transf_sigma = LogNormal(log(1-3*current_sigma),sigma_sigma) # Change scale sigma
+    prop_sigma = (1-rand(transf_sigma))/3. # Change scale sigma
   end
   if FIXED_ALPHA
     prop_alpha = current_alpha
@@ -511,8 +511,8 @@ function update_parameters_neg2(current_kappa::Float64,
   sum_log_aff = sum( [ sum(log.(v)) for (k,v) in affinities ] )
   sum_aff = sum( [ sum(v) for (k,v) in affinities ] )
 
-  log_accept_sigma = a_sigma*(log(1-4*prop_sigma)-log(1-4*current_sigma)) +
-                    4*b_sigma*(prop_sigma-current_sigma) -
+  log_accept_sigma = a_sigma*(log(1-3*prop_sigma)-log(1-3*current_sigma)) +
+                    3*b_sigma*(prop_sigma-current_sigma) -
                     n_jumps*log( gamma(1-prop_sigma)/gamma(1-current_sigma) ) -
                     (prop_sigma-current_sigma)*sum(log.(activities)) # Change scale sigma
   log_accept_tau = a_tau*log(prop_tau/current_tau) -
@@ -576,9 +576,9 @@ function update_parameters_neg2(current_kappa::Float64,
   else
     # x_min_p = 0 # Warning
     # x_max_p = Inf # Warning
-    gamma_dist_p = Gamma(n*prop_alpha,1/prop_beta)
-    x_min_p = quantile(gamma_dist_p,0.00000001)
-    x_max_p = cquantile(gamma_dist_p,0.00000001)
+    gamma_dist_p = Gamma(n*prop_alpha, 1/prop_beta)
+    x_min_p = quantile(gamma_dist_p, 0.00000001)
+    x_max_p = cquantile(gamma_dist_p, 0.00000001)
   end
   # If prop_sigma is to close to zero, use the approximation prop_sigma = 0
   # to avoid computational errors
