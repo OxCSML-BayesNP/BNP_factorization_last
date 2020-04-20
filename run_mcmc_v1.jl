@@ -34,6 +34,10 @@ s = ArgParseSettings()
         help = "Set to true to fix sigma to 0"
         action = :store_true
 
+    "--const_alpha"
+        help = "Set to true to fix alpha"
+        action = :store_true
+
     "--directed"
         help = "Set to true if the dataset is directed"
         arg_type = Bool
@@ -116,7 +120,7 @@ prior_params = Dict()
 prior_params["kappa"] = (.1,.1)
 prior_params["sigma"] = (.1,.1)
 prior_params["tau"] = (.1,.1)
-prior_params["alpha"] = (.1,.1)
+prior_params["alpha"] = (.1,1.)
 prior_params["beta"] = (1.,1.)
 
 prop_params = Dict()
@@ -130,7 +134,7 @@ prop_params["beta"] = 0.02
 FIXED_KAPPA = false
 FIXED_SIGMA = parsed_args["const_sigma"]
 FIXED_TAU = false
-FIXED_ALPHA = false
+FIXED_ALPHA = parsed_args["const_alpha"]
 FIXED_BETA = true
 
 
