@@ -120,7 +120,7 @@ prior_params = Dict()
 prior_params["kappa"] = (.1,.1)
 prior_params["sigma"] = (.1,.1)
 prior_params["tau"] = (.1,.1)
-prior_params["alpha"] = (1.,10.)
+prior_params["alpha"] = (8.,80.)
 prior_params["beta"] = (1.,1.)
 
 prop_params = Dict()
