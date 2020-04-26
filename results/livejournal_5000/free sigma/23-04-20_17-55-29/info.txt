@@ -1,0 +1,22 @@
+Dataset:
+  name = livejournal_5000
+  number of nodes = 5000
+  number of edges = 81648
+  directed = false
+  weighted = false
+
+Initial parameters:
+  kappa = 1.0
+  tau = 5.0
+  sigma = 0.0
+  alpha = 0.5
+  beta = 0.5
+  warm_start = true
+
+Number of iterations = 500000
+Time  = 160742752145461 s 
+
+Comments : Alpha free
+ new update of mu tilde 
+ new measure unobs 
+ sigma max 0.25
