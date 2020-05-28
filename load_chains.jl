@@ -85,16 +85,6 @@ n_iter = length(kappa_list[1])
 burn_start = (warm_start ? 1 : Int(3*n_iter/4))
 K = size(activities_list[1])[2]
 
-burn_start = trunc(Int,n_iter/2) # DELETE
-
-plot_true = false # DELETE
-kappa_true = 1. # DELETE
-alpha_true = 0.05 # DELETE
-sigma_true = 0.2 # DELETE
-tau_true = 0.15 # DELETE
-kn_true = 42 # DELETE
-
-
 
 results_path = string("results/",data_name,"/",save_dir,"/")
 mkpath(results_path)
