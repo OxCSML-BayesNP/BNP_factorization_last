@@ -360,7 +360,7 @@ function update_measure(partition::Factorized{Bool},
   s_min = minimum(slice_matrix.nzval)
 
   # DELETE
-  s_min = maximum([s_min, 1e-15])
+  s_min = maximum([s_min, 1e-12])
   # DELETE
 
   #var_activities = rnd_GGP_jumps((sigma*expected_Ncomm+kappa*tau^sigma),1.,sigma,tau*s_min) # Test change 08/10/18 (Gamma)
