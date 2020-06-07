@@ -55,7 +55,7 @@ s = ArgParseSettings()
 
     "--warm_start"
         help = "Use initial parameters to intiate communities"
-        args_type = Bool
+        arg_type = Bool
         default = true
 end
 
