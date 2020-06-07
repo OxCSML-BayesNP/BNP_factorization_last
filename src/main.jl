@@ -497,7 +497,7 @@ function update_parameters_neg2(current_kappa::Float64,
   if FIXED_ALPHA
     prop_alpha = current_alpha
   else
-    alpha_dist = LogNormal(log(current_alpha),sigma_alpha)
+    alpha_dist = truncated(LogNormal(log(current_alpha),sigma_alpha), 0, 1.)
     prop_alpha = rand(alpha_dist)
   end
   if FIXED_BETA

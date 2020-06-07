@@ -1,0 +1,12 @@
+Dataset:
+  name = data_sbm_600
+  number of nodes = 600
+  number of edges = 7239.0
+  directed = false
+  weighted = false
+
+Initial parameters:
+  K = 3
+  Communitites sizes = [200, 200, 200]
+  p_in = 0.1
+  p_out = 0.01
