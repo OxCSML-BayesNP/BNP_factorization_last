@@ -1,0 +1,22 @@
+Dataset:
+  name = fb_4000
+  number of nodes = 4039
+  number of edges = 84243
+  directed = false
+  weighted = false
+
+Initial parameters:
+  kappa = 1.0
+  tau = 5.0
+  sigma = 0.0
+  alpha = 0.5
+  beta = 0.5
+  warm_start = true
+
+Number of iterations = 1000000
+Time  = 274726389421862 s 
+
+Comments : Alpha free
+ new update of mu tilde 
+ new measure unobs 
+ sigma max 0.25
