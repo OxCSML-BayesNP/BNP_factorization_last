@@ -52,6 +52,11 @@ s = ArgParseSettings()
         help = "Number of iterations"
         arg_type = Int
         default = 2000
+
+    "--warm_start"
+        help = "Use initial parameters to intiate communities"
+        args_type = Bool
+        default = true
 end
 
 parsed_args = parse_args(ARGS, s)
@@ -81,7 +86,7 @@ comments = "Alpha free\n new update of mu tilde \n new measure unobs \n sigma ma
 # Set parameters
 #-------------------------------------------------------------------------------
 kappa=1.;tau=5.;sigma=0.;alpha=.5;beta=alpha
-warm_start = true
+warm_start = parsed_args["warm_start"]
 weighted = parsed_args["weighted"]
 directed = parsed_args["directed"]
 
