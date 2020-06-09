@@ -57,6 +57,11 @@ s = ArgParseSettings()
         help = "Use initial parameters to intiate communities"
         arg_type = Bool
         default = true
+
+    "--n_clusterings"
+        help = "Number of clusterings to store"
+        arg_type = Int64
+        default = 10
 end
 
 parsed_args = parse_args(ARGS, s)
