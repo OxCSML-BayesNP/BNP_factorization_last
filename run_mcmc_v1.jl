@@ -104,7 +104,7 @@ pred_ratio = 0.
 # Saving clustering
 save_clustering = true
 # Number of clustering to save
-n_clusterings = 10
+n_clusterings = parsed_args["n_clusterings"]
 
 n_clusterings = (save_clustering ? n_clusterings : 2)
 
