@@ -13,8 +13,8 @@ using ProgressBars
 using HDF5, JLD
 using DelimitedFiles
 using Dates
-using ProfileView
-using Profile
+#using ProfileView
+#using Profile
 using ArgParse
 
 Id = SparseArrays.I
@@ -404,7 +404,7 @@ println(string("Starting Gibbs sample with ",n_iter," steps"))
 
 start = time_ns()
 
-Profile.clear()
+#Profile.clear()
 #@showprogress for i in 1:n_iter
 for i in tqdm(1:n_iter)
 
