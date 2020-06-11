@@ -492,7 +492,7 @@ function update_parameters_neg2(current_kappa::Float64,
     prop_sigma = current_sigma
   else
     #transf_sigma = LogNormal(log(1-3*current_sigma),sigma_sigma)
-    transf_sigma = truncated(LogNormal(log(1-3*current_sigma),sigma_sigma), 0, Inf) # Change scale sigma
+    transf_sigma = truncated(LogNormal(log(1-3*current_sigma),sigma_sigma), 1, Inf) # Change scale sigma
     prop_sigma = (1-rand(transf_sigma))/3. # Change scale sigma
   end
   if FIXED_ALPHA
