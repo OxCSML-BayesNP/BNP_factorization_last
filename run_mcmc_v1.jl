@@ -128,7 +128,7 @@ n_steps_hyper = 20
 # Hyperparameters for the MH update
 prior_params = Dict()
 prior_params["kappa"] = (.1,.1)
-prior_params["sigma"] = (.1,.1)
+prior_params["sigma"] = (1.,1.)
 prior_params["tau"] = (1.,1.)
 prior_params["alpha"] = (.1,1.)
 prior_params["beta"] = (1.,1.)
