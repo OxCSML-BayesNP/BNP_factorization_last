@@ -13,14 +13,9 @@ Initial parameters:
   beta = 0.5
   warm_start = true
 
-Hyper parameters:
-  kappa = (0.1, 0.1)
-  tau = (1.0, 1.0)
-  sigma = (1.0, 1.0)
-  alpha = (0.1, 1.0)
-  beta = (1.0, 1.0)
-
 Number of iterations = 200000
+Time  = 12708177504951 s 
+
 Comments : Alpha free
  new update of mu tilde 
  new measure unobs 
