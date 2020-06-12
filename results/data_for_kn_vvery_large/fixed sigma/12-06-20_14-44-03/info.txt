@@ -14,7 +14,7 @@ Initial parameters:
   warm_start = true
 
 Number of iterations = 200000
-Time  = 9554238930208 s 
+Time  = 9424150700824 s 
 
 Comments : Alpha free
  new update of mu tilde 
