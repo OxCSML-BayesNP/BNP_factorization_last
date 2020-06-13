@@ -491,9 +491,9 @@ function update_parameters_neg2(current_kappa::Float64,
   if FIXED_SIGMA
     prop_sigma = current_sigma
   else
-    transf_sigma = LogNormal(log(1-3*current_sigma),sigma_sigma)
+    transf_sigma = LogNormal(log(1-4*current_sigma),sigma_sigma)
     #transf_sigma = truncated(LogNormal(log(1-3*current_sigma),sigma_sigma), 1, Inf) # Change scale sigma
-    prop_sigma = (1-rand(transf_sigma))/3. # Change scale sigma
+    prop_sigma = (1-rand(transf_sigma))/4. # Change scale sigma
   end
   if FIXED_ALPHA
     prop_alpha = current_alpha
@@ -513,8 +513,8 @@ function update_parameters_neg2(current_kappa::Float64,
   sum_log_aff = sum( [ sum(log.(v)) for (k,v) in affinities ] )
   sum_aff = sum( [ sum(v) for (k,v) in affinities ] )
 
-  log_accept_sigma = a_sigma*(log(1-3*prop_sigma)-log(1-3*current_sigma)) +
-                    3*b_sigma*(prop_sigma-current_sigma) -
+  log_accept_sigma = a_sigma*(log(1-4*prop_sigma)-log(1-4*current_sigma)) +
+                    4*b_sigma*(prop_sigma-current_sigma) -
                     n_jumps*log( gamma(1-prop_sigma)/gamma(1-current_sigma) ) -
                     (prop_sigma-current_sigma)*sum(log.(activities)) # Change scale sigma
   log_accept_tau = a_tau*log(prop_tau/current_tau) -
