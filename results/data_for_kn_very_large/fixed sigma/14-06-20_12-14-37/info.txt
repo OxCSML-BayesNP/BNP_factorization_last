@@ -1,7 +1,7 @@
 Dataset:
-  name = data_for_kn_small
-  number of nodes = 500
-  number of edges = 2979
+  name = data_for_kn_very_large
+  number of nodes = 3000
+  number of edges = 233486
   directed = true
   weighted = true
 
@@ -14,7 +14,7 @@ Initial parameters:
   warm_start = true
 
 Number of iterations = 250000
-Time  = 2915368184451 s 
+Time  = 35471099758333 s 
 
 Comments : Alpha free
  new update of mu tilde 
