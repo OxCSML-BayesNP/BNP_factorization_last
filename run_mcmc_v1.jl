@@ -120,7 +120,7 @@ skip = 50
 # Number of iterations as burn-in
 burn = floor(Int,2*n_iter/4)
 # Number of activities to store
-K = 10
+K = 5
 
 # Number of updates of the hyperparameters per iteration
 n_steps_hyper = 20
@@ -128,16 +128,16 @@ n_steps_hyper = 20
 # Hyperparameters for the MH update
 prior_params = Dict()
 prior_params["kappa"] = (.1,.1)
-prior_params["sigma"] = (1.,1.)
-prior_params["tau"] = (1.,1.)
+prior_params["sigma"] = (.1,.1)
+prior_params["tau"] = (.1,.1)
 prior_params["alpha"] = (.1,1.)
 prior_params["beta"] = (1.,1.)
 
 prop_params = Dict()
-prop_params["kappa"] = 0.04
-prop_params["sigma"] = 0.04
-prop_params["tau"] = 0.04
-prop_params["alpha"] = 0.04
+prop_params["kappa"] = 0.02
+prop_params["sigma"] = 0.02
+prop_params["tau"] = 0.02
+prop_params["alpha"] = 0.02
 prop_params["beta"] = 0.02
 
 # Set to true if the parameter is fixed by user (to the initial value)
