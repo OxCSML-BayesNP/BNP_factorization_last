@@ -1,0 +1,22 @@
+Dataset:
+  name = data_for_kn_very_large
+  number of nodes = 3000
+  number of edges = 233486
+  directed = true
+  weighted = true
+
+Initial parameters:
+  kappa = 1.0
+  tau = 5.0
+  sigma = 0.0
+  alpha = 0.5
+  beta = 0.5
+  warm_start = true
+
+Number of iterations = 250000
+Time  = 35308402650921 s 
+
+Comments : Alpha free
+ new update of mu tilde 
+ new measure unobs 
+ sigma max 0.25
